@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@theme {
+  --font-roboto: "Roboto", sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-roboto);
+    line-height: 1.5;
+    text-rendering: optimizespeed;
+    background-color: black;
+  }
+
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  * {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
