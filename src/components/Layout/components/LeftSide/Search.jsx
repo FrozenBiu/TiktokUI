@@ -31,10 +31,11 @@ export default function Search({ show, setShow }) {
       {/* Thanh tìm kiếm */}
       <div className="gap-1 bg-[#1f1f1f] rounded-full cursor-pointer mx-2 mt-2">
         <input
-          className="rounded-full w-full py-3 px-3 text-gray-300 font-medium
+          className="search2 rounded-full w-full py-3 px-3 text-gray-300 font-medium
               text-sm focus:outline-1 focus:outline-gray-600"
           type="text"
           placeholder="Tìm kiếm"
+          autoSave="none"
         />
       </div>
     </div>

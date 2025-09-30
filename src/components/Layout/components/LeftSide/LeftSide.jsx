@@ -102,9 +102,13 @@ export default function LeftSide() {
               </defs>
             </svg>
           </a>
+
           {/* Thanh tìm kiếm */}
           <button
-            onClick={() => setShow(true)}
+            onClick={() => {
+              show ? setShow(false) : setShow(true);
+              document.querySelector(".search2").focus();
+            }}
             className={`${
               !show && "lg:flex lg:justify-start lg:w-[13rem] lg:h-[2.5rem]"
             } items-center justify-center gap-1 inline-flex size-10 min-w-0 bg-[#1f1f1f] rounded-full cursor-pointer`}

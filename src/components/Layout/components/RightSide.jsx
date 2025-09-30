@@ -3,11 +3,11 @@ export default function RightSide() {
     <div className="w-[31%] hidden sm:block absolute right-0 top-0">
       <div className="w-[100%] relative">
         {/* Thanh công cụ, download app, profile */}
-        <div className="bg-[#1f1f1f] rounded-full inline-flex justify-end items-center gap-3 py-2 px-4 mt-[1.25rem] mr-[1rem] absolute right-0 top-0">
+        <div className="bg-[#1f1f1fb2] rounded-full inline-flex justify-end items-center gap-3 px-2 py-1 mt-[1.25rem] mr-[1rem] absolute right-0 top-0">
           {/* Nhận xu */}
           <a
             href=""
-            className="xl:min-w-[32px] max-w-[120px] flex items-center gap-1"
+            className="xl:min-w-[32px] max-w-[120px] flex items-center gap-1 hover:bg-[#353434] rounded-full p-2"
           >
             <div>
               <svg
@@ -34,7 +34,7 @@ export default function RightSide() {
           {/* Tải ứng dụng */}
           <a
             href=""
-            className="xl:min-w-[32px] max-w-[120px] flex items-center gap-1"
+            className="xl:min-w-[32px] max-w-[120px] flex items-center gap-1 hover:bg-[#353434] rounded-full p-2"
           >
             <div>
               <svg
@@ -61,7 +61,7 @@ export default function RightSide() {
           {/* Ứng dụng */}
           <a
             href=""
-            className="xl:min-w-[32px] max-w-[120px] flex items-center gap-1"
+            className="xl:min-w-[32px] max-w-[120px] flex items-center gap-1 hover:bg-[#353434] rounded-full p-2"
           >
             <div>
               <svg
@@ -84,7 +84,7 @@ export default function RightSide() {
           <div className="line h-5 bg-gray-500 w-[0.5px]"></div>
 
           {/* Profile */}
-          <button className="">
+          <button className="hover:bg-[#353434] rounded-full p-2 cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -105,7 +105,7 @@ export default function RightSide() {
         {/* Nút prev & next video */}
         <div className="absolute right-7 top-95 flex flex-col gap-3">
           {/* Previous */}
-          <button className="bg-[#212121] p-2 rounded-full hover:bg-[#313131fd] cursor-pointer">
+          <button className="bg-[#212121] p-3 rounded-full hover:bg-[#313131fd] cursor-pointer flex justify-center items-center">
             <svg
               fill="currentColor"
               color="inherit"
@@ -119,7 +119,7 @@ export default function RightSide() {
           </button>
 
           {/* Next */}
-          <button className="bg-[#212121] p-2 rounded-full hover:bg-[#313131fd] cursor-pointer">
+          <button className="bg-[#212121] p-3 rounded-full hover:bg-[#313131fd] cursor-pointer flex justify-center items-center">
             <svg
               fill="currentColor"
               color="inherit"

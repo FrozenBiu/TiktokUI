@@ -8,7 +8,7 @@ export default function Home() {
         <div className="h-full w-full min-w-[calc(500px-9.5rem)] flex gap-2 aspect-[9/16]">
           <video
             className="w-full h-full rounded-2xl bg-amber-400"
-            src=""
+            src="assets/videos/video-sample.mp4"
           ></video>
         </div>
 
