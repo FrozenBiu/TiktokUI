@@ -10,7 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.7.4",
+    "@floating-ui/react": "^0.27.16",
     "@tailwindcss/vite": "^4.1.13",
+    "@tippyjs/react": "^4.2.6",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.1",
