@@ -31,4 +31,9 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  .active {
+    color: var(--primary-color);
+    fill: var(--primary-color);
+  }
 }
