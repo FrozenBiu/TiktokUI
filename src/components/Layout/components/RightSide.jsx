@@ -3,7 +3,7 @@ export default function RightSide() {
     <div className="w-[31%] hidden sm:block absolute right-0 top-0">
       <div className="w-[100%] relative">
         {/* Thanh công cụ, download app, profile */}
-        <div className="bg-[#1f1f1fb2] rounded-full inline-flex justify-end items-center gap-3 px-2 py-1 mt-[1.25rem] mr-[1rem] absolute right-0 top-0">
+        <div className="bg-[#1f1f1fb2] rounded-full inline-flex justify-end items-center gap-3 px-2 py-1 mt-[1.25rem] mr-[1rem] absolute right-0 top-5">
           {/* Nhận xu */}
           <a
             href=""
@@ -100,6 +100,10 @@ export default function RightSide() {
               />
             </svg>
           </button>
+          {/* Login */}
+          {/* <button className="bg-(--primary-color) text-[16px] font-medium px-2 py-1 w-full rounded-full cursor-pointer">
+            Đăng nhập
+          </button> */}
         </div>
 
         {/* Nút prev & next video */}
