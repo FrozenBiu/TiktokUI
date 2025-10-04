@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { MenuLeft } from "./MenuLeft";
 import Search from "./Search";
+import MoreMenu from "./MoreMenu";
 
 export default function LeftSide() {
   const [show, setShow] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  const [isMoreMenu, setIsMoreMenu] = useState(false);
   const [isActive, setIsActive] = useState(0); //state kiểm tra page đang active
   // const [isLogin, setIsLogin] = useState(false);
 
@@ -12,7 +15,7 @@ export default function LeftSide() {
       <div
         className={`w-[4.5rem] ${
           !show && "lg:w-[240px] lg:border-0"
-        } px-[1rem] fixed left-0 top-0 h-full border-r-[0.5px] border-[#6a728262] z-99 bg-black`}
+        } px-[1rem] absolute left-0 top-0 h-full border-r-[0.5px] border-[#6a728262] z-99 bg-black`}
       >
         {/* Logo và thanh tìm kiếm */}
         <div
@@ -109,11 +112,12 @@ export default function LeftSide() {
           <button
             onClick={() => {
               show ? setShow(false) : setShow(true);
+              isSearching ? setIsSearching(false) : setIsSearching(true);
               document.querySelector(".search2").focus();
             }}
             className={`${
               !show && "lg:flex lg:justify-start lg:w-[13rem] lg:h-[2.5rem]"
-            } items-center justify-center gap-1 inline-flex size-10 min-w-0 bg-[#1f1f1f] rounded-full cursor-pointer`}
+            } items-center justify-center gap-1 inline-flex size-[39.5px] min-w-0 bg-[#1f1f1f] rounded-full cursor-pointer`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -144,30 +148,48 @@ export default function LeftSide() {
 
         {/* Thanh chức năng khác */}
         <div className="pt-[0.25rem] pb-[0.5rem] w-full scrollbar flex flex-col items-center gap-[0.25rem]">
-          {MenuLeft.map((item, index) => (
-            <div
-              key={index}
-              data-id={`${index}`}
-              onClick={(e) => {
-                setShow(false);
-                setIsActive(Number(e.currentTarget.dataset.id));
-              }}
-              className={`flex justify-between ${
-                isActive === index ? "text-(--primary-color)" : ""
-              } ${
-                !show && "lg:justify-start lg:w-[13rem]"
-              } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
-            >
-              <div className="text-[19px] pl-1 shrink-0">{item.image}</div>
-              <h2
-                className={`font-medium ml-1 hidden ${
-                  !show ? "lg:block lg:opacity-100" : "lg:opacity-0"
-                } transition-all ease-in-out duration-300`}
+          <ul className="overflow-y-scroll flex flex-col gap-[0.25rem]">
+            {MenuLeft.map((item, index) => (
+              <li
+                key={index}
+                data-id={`${index}`}
+                onClick={(e) => {
+                  setShow(false);
+                  setIsActive(Number(e.currentTarget.dataset.id));
+                  if (Number(e.currentTarget.dataset.id) === 9) {
+                    isMoreMenu ? setIsMoreMenu(false) : setIsMoreMenu(true);
+                    show ? setShow(false) : setShow(true);
+                  }
+                }}
+                className={`flex justify-between ${
+                  isActive === index ? "text-(--primary-color)" : ""
+                } ${
+                  !show && "lg:justify-start lg:w-[13rem]"
+                } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
               >
-                {item.title}
-              </h2>
-            </div>
-          ))}
+                <button className="cursor-pointer">
+                  <div
+                    className={`flex items-center gap-[0.75rem] ${
+                      show ? "" : "ms-1"
+                    }`}
+                  >
+                    <div
+                      className={`text-[32px] shrink-0 flex items-center justify-center`}
+                    >
+                      {item.image}
+                    </div>
+                    <h2
+                      className={`font-medium ml-1 hidden ${
+                        !show ? "lg:block lg:opacity-100" : "lg:opacity-0"
+                      } transition-all ease-in-out duration-300`}
+                    >
+                      {item.title}
+                    </h2>
+                  </div>
+                </button>
+              </li>
+            ))}
+          </ul>
 
           {/* Login */}
           <button
@@ -199,7 +221,18 @@ export default function LeftSide() {
         </div>
       </div>
 
-      <Search show={show} setShow={setShow} />
+      <Search
+        show={show}
+        isSearching={isSearching}
+        setShow={setShow}
+        setIsSearching={setIsSearching}
+      />
+      <MoreMenu
+        show={show}
+        isMoreMenu={isMoreMenu}
+        setShow={setShow}
+        setIsMoreMenu={setIsMoreMenu}
+      />
     </>
   );
 }

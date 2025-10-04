@@ -1,15 +1,18 @@
-export default function Search({ show, setShow }) {
+export default function Search({ show, isSearching, setShow, setIsSearching }) {
   return (
     <div
       className={`h-screen w-[318px] bg-black z-98 fixed top-0 left-60 transition-transform transform ease-in-out duration-500 border-r border-[#ffffff1f] ${
-        show ? "-translate-x-40" : "-translate-x-120"
+        show && isSearching ? "-translate-x-40" : "-translate-x-120"
       }`}
     >
       <h3 className="text-xl font-bold py-5 pl-2">Tìm kiếm</h3>
 
       {/* Close button */}
       <button
-        onClick={() => setShow(false)}
+        onClick={() => {
+          setIsSearching(false);
+          setShow(false);
+        }}
         className="absolute top-7 right-6 bg-[#1f1f1f] hover:bg-[#363636] rounded-full p-1 cursor-pointer"
       >
         <svg
