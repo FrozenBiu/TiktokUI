@@ -1,10 +1,10 @@
 import { useState } from "react";
-import OtherFunction from "./OtherFunction";
 import { MenuLeft } from "./MenuLeft";
 import Search from "./Search";
 
 export default function LeftSide() {
   const [show, setShow] = useState(false);
+  const [isActive, setIsActive] = useState(0); //state kiểm tra page đang active
   // const [isLogin, setIsLogin] = useState(false);
 
   return (
@@ -144,13 +144,29 @@ export default function LeftSide() {
 
         {/* Thanh chức năng khác */}
         <div className="pt-[0.25rem] pb-[0.5rem] w-full scrollbar flex flex-col items-center gap-[0.25rem]">
-          {MenuLeft.map((item) => (
-            <OtherFunction
-              key={item.title}
-              image={item.image}
-              title={item.title}
-              show={show}
-            />
+          {MenuLeft.map((item, index) => (
+            <div
+              key={index}
+              data-id={`${index}`}
+              onClick={(e) => {
+                setShow(false);
+                setIsActive(Number(e.currentTarget.dataset.id));
+              }}
+              className={`flex justify-between ${
+                isActive === index ? "text-(--primary-color)" : ""
+              } ${
+                !show && "lg:justify-start lg:w-[13rem]"
+              } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
+            >
+              <div className="text-[19px] pl-1 shrink-0">{item.image}</div>
+              <h2
+                className={`font-medium ml-1 hidden ${
+                  !show ? "lg:block lg:opacity-100" : "lg:opacity-0"
+                } transition-all ease-in-out duration-300`}
+              >
+                {item.title}
+              </h2>
+            </div>
           ))}
 
           {/* Login */}

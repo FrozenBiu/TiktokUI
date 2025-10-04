@@ -1,5 +1,5 @@
 import LeftSide from "../components/LeftSide/LeftSide";
-import RightSide from "../components/RightSide";
+import RightSide from "../components/RightSide/RightSide";
 
 export default function DefaultLayout({ children }) {
   return (

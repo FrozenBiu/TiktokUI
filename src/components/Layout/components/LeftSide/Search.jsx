@@ -1,7 +1,7 @@
 export default function Search({ show, setShow }) {
   return (
     <div
-      className={`h-screen w-[318px] bg-black z-98 fixed top-0 left-60 transition-transform transform ease-in-out duration-500 ${
+      className={`h-screen w-[318px] bg-black z-98 fixed top-0 left-60 transition-transform transform ease-in-out duration-500 border-r border-[#ffffff1f] ${
         show ? "-translate-x-40" : "-translate-x-120"
       }`}
     >
