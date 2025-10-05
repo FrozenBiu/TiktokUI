@@ -2,7 +2,7 @@ export default function Search({ show, isSearching, setShow, setIsSearching }) {
   return (
     <div
       className={`h-screen w-[318px] bg-black z-98 fixed top-0 left-60 transition-transform transform ease-in-out duration-500 border-r border-[#ffffff1f] ${
-        show && isSearching ? "-translate-x-40" : "-translate-x-120"
+        show && isSearching ? "-translate-x-40" : "-translate-x-122"
       }`}
     >
       <h3 className="text-xl font-bold py-5 pl-2">Tìm kiếm</h3>

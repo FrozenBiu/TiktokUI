@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { MenuLeft } from "./MenuLeft";
 import Search from "./Search";
 import MoreMenu from "./MoreMenu";
+import AppContext from "../AppProvider/AppProvider";
 
 export default function LeftSide() {
   const [show, setShow] = useState(false);
@@ -9,6 +10,9 @@ export default function LeftSide() {
   const [isMoreMenu, setIsMoreMenu] = useState(false);
   const [isActive, setIsActive] = useState(0); //state kiểm tra page đang active
   // const [isLogin, setIsLogin] = useState(false);
+  const { isLogin, setIsLogin } = useContext(AppContext);
+
+  const notYetLogin = MenuLeft.filter((item) => !item.mustLogin);
 
   return (
     <>
@@ -111,8 +115,16 @@ export default function LeftSide() {
           {/* Thanh tìm kiếm */}
           <button
             onClick={() => {
-              show ? setShow(false) : setShow(true);
-              isSearching ? setIsSearching(false) : setIsSearching(true);
+              if (!show && !isMoreMenu && !isSearching) {
+                setShow(true);
+                setIsSearching(true);
+              } else if (show && isSearching) {
+                setShow(false);
+                setIsSearching(false);
+              } else if (show && !isSearching && isMoreMenu) {
+                setIsMoreMenu(false);
+                setIsSearching(true);
+              }
               document.querySelector(".search2").focus();
             }}
             className={`${
@@ -149,50 +161,114 @@ export default function LeftSide() {
         {/* Thanh chức năng khác */}
         <div className="pt-[0.25rem] pb-[0.5rem] w-full scrollbar flex flex-col items-center gap-[0.25rem]">
           <ul className="overflow-y-scroll flex flex-col gap-[0.25rem]">
-            {MenuLeft.map((item, index) => (
-              <li
-                key={index}
-                data-id={`${index}`}
-                onClick={(e) => {
-                  setShow(false);
-                  setIsActive(Number(e.currentTarget.dataset.id));
-                  if (Number(e.currentTarget.dataset.id) === 9) {
-                    isMoreMenu ? setIsMoreMenu(false) : setIsMoreMenu(true);
-                    show ? setShow(false) : setShow(true);
-                  }
-                }}
-                className={`flex justify-between ${
-                  isActive === index ? "text-(--primary-color)" : ""
-                } ${
-                  !show && "lg:justify-start lg:w-[13rem]"
-                } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
-              >
-                <button className="cursor-pointer">
-                  <div
-                    className={`flex items-center gap-[0.75rem] ${
-                      show ? "" : "ms-1"
-                    }`}
-                  >
+            {!isLogin &&
+              notYetLogin.map((item, index) => (
+                <li
+                  key={index}
+                  data-id={`${index}`}
+                  onClick={(e) => {
+                    setShow(false);
+                    setIsActive(Number(e.currentTarget.dataset.id));
+                    if (Number(e.currentTarget.dataset.id) === 9) {
+                      if (!show && !isMoreMenu && !isSearching) {
+                        setShow(true);
+                        setIsMoreMenu(true);
+                      } else if (show && isMoreMenu) {
+                        setShow(false);
+                        setIsMoreMenu(false);
+                      } else if (show && !isMoreMenu && isSearching) {
+                        setIsSearching(false);
+                        setShow(true);
+                        setIsMoreMenu(true);
+                      }
+                    }
+                  }}
+                  className={`flex justify-between ${
+                    isActive === index ? "text-(--primary-color)" : ""
+                  } ${
+                    !show && "lg:justify-start lg:w-[13rem]"
+                  } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
+                >
+                  <button className="cursor-pointer">
                     <div
-                      className={`text-[32px] shrink-0 flex items-center justify-center`}
+                      className={`flex items-center gap-[0.75rem] ${
+                        show ? "" : "lg:ms-1"
+                      }`}
                     >
-                      {item.image}
+                      <div
+                        className={`text-[32px] shrink-0 flex items-center justify-center`}
+                      >
+                        {item.image}
+                      </div>
+                      <h2
+                        className={`font-medium ml-1 hidden ${
+                          !show ? "lg:block lg:opacity-100" : "lg:opacity-0"
+                        } transition-all ease-in-out duration-300`}
+                      >
+                        {item.title}
+                      </h2>
                     </div>
-                    <h2
-                      className={`font-medium ml-1 hidden ${
-                        !show ? "lg:block lg:opacity-100" : "lg:opacity-0"
-                      } transition-all ease-in-out duration-300`}
+                  </button>
+                </li>
+              ))}
+
+            {isLogin &&
+              MenuLeft.map((item, index) => (
+                <li
+                  key={index}
+                  data-id={`${index}`}
+                  onClick={(e) => {
+                    setShow(false);
+                    setIsActive(Number(e.currentTarget.dataset.id));
+                    if (Number(e.currentTarget.dataset.id) === 9) {
+                      if (!show && !isMoreMenu && !isSearching) {
+                        setShow(true);
+                        setIsMoreMenu(true);
+                      } else if (show && isMoreMenu) {
+                        setShow(false);
+                        setIsMoreMenu(false);
+                      } else if (show && !isMoreMenu && isSearching) {
+                        setIsSearching(false);
+                        setShow(true);
+                        setIsMoreMenu(true);
+                      }
+                    }
+                  }}
+                  className={`flex justify-between ${
+                    isActive === index ? "text-(--primary-color)" : ""
+                  } ${
+                    !show && "lg:justify-start lg:w-[13rem]"
+                  } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
+                >
+                  <button className="cursor-pointer">
+                    <div
+                      className={`flex items-center gap-[0.75rem] ${
+                        show ? "" : "lg:ms-1"
+                      }`}
                     >
-                      {item.title}
-                    </h2>
-                  </div>
-                </button>
-              </li>
-            ))}
+                      <div
+                        className={`text-[32px] shrink-0 flex items-center justify-center`}
+                      >
+                        {item.image}
+                      </div>
+                      <h2
+                        className={`font-medium ml-1 hidden ${
+                          !show ? "lg:block lg:opacity-100" : "lg:opacity-0"
+                        } transition-all ease-in-out duration-300`}
+                      >
+                        {item.title}
+                      </h2>
+                    </div>
+                  </button>
+                </li>
+              ))}
           </ul>
 
           {/* Login */}
           <button
+            onClick={() => {
+              setIsLogin(!isLogin);
+            }}
             className={`${
               !show && "lg:block"
             } hidden mt-2 cursor-pointer hover:opacity-90 bg-(--primary-color) w-full rounded-md color-white text-[16px] h-10 leading-[21px] min-w-[108px] px-4 py-[1px] font-medium`}

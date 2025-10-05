@@ -11,6 +11,7 @@ export const MenuLeft = [
       </svg>
     ),
     title: "Đề xuất",
+    mustLogin: false,
   },
   {
     image: (
@@ -25,6 +26,7 @@ export const MenuLeft = [
       </svg>
     ),
     title: "Khám phá",
+    mustLogin: false,
   },
   {
     image: (
@@ -38,6 +40,7 @@ export const MenuLeft = [
       </svg>
     ),
     title: "Đã follow",
+    mustLogin: false,
   },
   {
     image: (
@@ -51,6 +54,7 @@ export const MenuLeft = [
       </svg>
     ),
     title: "Bạn bè",
+    mustLogin: true,
   },
   {
     image: (
@@ -70,6 +74,7 @@ export const MenuLeft = [
       </svg>
     ),
     title: "LIVE",
+    mustLogin: false,
   },
   {
     image: (
@@ -83,6 +88,7 @@ export const MenuLeft = [
       </svg>
     ),
     title: "Tin nhắn",
+    mustLogin: true,
   },
   {
     image: (
@@ -98,6 +104,7 @@ export const MenuLeft = [
       </svg>
     ),
     title: "Hoạt động",
+    mustLogin: true,
   },
   {
     image: (
@@ -112,6 +119,7 @@ export const MenuLeft = [
       </svg>
     ),
     title: "Tải lên",
+    mustLogin: false,
   },
   {
     image: (
@@ -131,6 +139,7 @@ export const MenuLeft = [
       </svg>
     ),
     title: "Hồ sơ",
+    mustLogin: false,
   },
   {
     image: (
@@ -150,5 +159,6 @@ export const MenuLeft = [
       </svg>
     ),
     title: "Thêm",
+    mustLogin: false,
   },
 ];

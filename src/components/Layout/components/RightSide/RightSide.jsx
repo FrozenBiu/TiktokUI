@@ -1,9 +1,14 @@
+import { useContext } from "react";
+import AppContext from "../AppProvider/AppProvider";
+
 export default function RightSide() {
+  const { isLogin, setIsLogin } = useContext(AppContext);
+
   return (
     <div className="w-[31%] hidden sm:block absolute right-0 top-0">
       <div className="w-[100%] relative">
         {/* Thanh công cụ, download app, profile */}
-        <div className="bg-[#1f1f1fb2] rounded-full inline-flex justify-end items-center gap-3 px-2 py-1 mt-[1.25rem] mr-[1rem] absolute right-0 top-5">
+        <div className="bg-[#1f1f1fb2] rounded-full inline-flex justify-end items-center xl:gap-3 p-2 mt-[1.25rem] mr-[1rem] absolute right-0 top-5">
           {/* Nhận xu */}
           <a
             href=""
@@ -81,29 +86,36 @@ export default function RightSide() {
           </a>
 
           {/* Line */}
-          <div className="line h-5 bg-gray-500 w-[0.5px]"></div>
+          <div className={`line h-5 bg-gray-500 w-[0.5px] mr-2 xl:mr-0`}></div>
 
           {/* Profile */}
-          <button className="hover:bg-[#353434] rounded-full p-2 cursor-pointer">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-7"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-              />
-            </svg>
-          </button>
+          {isLogin && (
+            <button className="hover:bg-[#353434] rounded-full p-2 cursor-pointer">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-7"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                />
+              </svg>
+            </button>
+          )}
           {/* Login */}
-          {/* <button className="bg-(--primary-color) text-[16px] font-medium px-2 py-1 w-full rounded-full cursor-pointer">
-            Đăng nhập
-          </button> */}
+          {!isLogin && (
+            <button
+              onClick={() => setIsLogin(!isLogin)}
+              className="bg-(--primary-color) text-[16px] font-medium px-2 py-1 w-[94px] rounded-full cursor-pointer flex items-center justify-center grow-0"
+            >
+              Đăng nhập
+            </button>
+          )}
         </div>
 
         {/* Nút prev & next video */}

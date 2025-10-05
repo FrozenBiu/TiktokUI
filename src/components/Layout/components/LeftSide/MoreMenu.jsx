@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./Menu/Header";
 
 export const MENU_ITEMS = [
@@ -112,6 +112,12 @@ export default function MoreMenu({ show, isMoreMenu, setShow, setIsMoreMenu }) {
   const [history, setHistory] = useState([{ data: MENU_ITEMS }]);
   const current = history[history.length - 1];
 
+  useEffect(() => {
+    if (!show && history.length > 1) {
+      setHistory((prev) => prev.slice(0, 1));
+    }
+  }, [show, history.length]);
+
   return (
     <div
       className={`h-screen w-[318px] bg-black z-98 fixed top-0 left-58 transition-transform transform ease-in-out duration-500  ${
@@ -172,7 +178,6 @@ export default function MoreMenu({ show, isMoreMenu, setShow, setIsMoreMenu }) {
                 if (isParent) {
                   setHistory((prev) => [...prev, item.children]);
                 }
-                console.log(current);
               }}
               className="w-full list-none px-[0.5rem] rounded-md hover:bg-[#ffffff30]"
             >
