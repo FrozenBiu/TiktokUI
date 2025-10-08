@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LeftSide from "../components/LeftSide/LeftSide";
-import RightSide from "../components/RightSide/RightSide";
 import AppContext from "../components/AppProvider/AppProvider";
+import RightSide from "../components/RightSide/RightSide";
 
 export default function DefaultLayout({ children }) {
   const [isLogin, setIsLogin] = useState(false);
@@ -17,8 +17,8 @@ export default function DefaultLayout({ children }) {
           <div className="main-content w-full min-w-[348px] h-screen py-3 flex justify-center mx-[5rem]">
             {children}
           </div>
-          <RightSide />
         </div>
+        <RightSide />
       </div>
     </AppContext.Provider>
   );

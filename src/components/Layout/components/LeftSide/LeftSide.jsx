@@ -1,10 +1,12 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { MenuLeft } from "./MenuLeft";
 import Search from "./Search";
 import MoreMenu from "./MoreMenu";
 import AppContext from "../AppProvider/AppProvider";
 
 export default function LeftSide() {
+  const searchRef = useRef(null);
+
   const [show, setShow] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [isMoreMenu, setIsMoreMenu] = useState(false);
@@ -201,7 +203,7 @@ export default function LeftSide() {
                         {item.image}
                       </div>
                       <h2
-                        className={`font-medium ml-1 hidden ${
+                        className={`font-semibold ml-1 hidden ${
                           !show ? "lg:block lg:opacity-100" : "lg:opacity-0"
                         } transition-all ease-in-out duration-300`}
                       >
@@ -252,7 +254,7 @@ export default function LeftSide() {
                         {item.image}
                       </div>
                       <h2
-                        className={`font-medium ml-1 hidden ${
+                        className={`font-semibold ml-1 hidden ${
                           !show ? "lg:block lg:opacity-100" : "lg:opacity-0"
                         } transition-all ease-in-out duration-300`}
                       >
@@ -271,7 +273,7 @@ export default function LeftSide() {
             }}
             className={` ${(isLogin || show) && "hidden"}  ${
               !isLogin && !show ? "hidden lg:block" : ""
-            }  mt-2 cursor-pointer hover:opacity-90 bg-(--primary-color) w-full rounded-md color-white text-[16px] h-10 leading-[21px] min-w-[108px] px-4 py-[1px] font-medium`}
+            }  mt-2 cursor-pointer hover:opacity-90 bg-(--primary-color) w-full rounded-md color-white text-[16px] h-10 leading-[21px] min-w-[108px] px-4 py-[1px] font-semibold`}
           >
             Đăng nhập
           </button>
@@ -281,7 +283,7 @@ export default function LeftSide() {
         <div className="line ml-1 mt-4 w-full h-[0.5px] bg-[#282829d8]"></div>
 
         {/* Copyright */}
-        <div className={`${!show && "lg:block"} hidden  pt-4 pl-2`}>
+        <div className={`${!show && "lg:block"} hidden pt-4 pl-2`}>
           <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
             Công ty
           </h4>
@@ -298,6 +300,7 @@ export default function LeftSide() {
       </div>
 
       <Search
+        searchRef={searchRef}
         show={show}
         isSearching={isSearching}
         setShow={setShow}

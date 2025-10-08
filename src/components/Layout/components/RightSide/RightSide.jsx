@@ -93,7 +93,7 @@ export default function RightSide() {
           {!isLogin && (
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="bg-(--primary-color) hover:opacity-95 text-[16px] font-medium px-2 py-1 w-[94px] rounded-full cursor-pointer flex items-center justify-center grow-0"
+              className="bg-(--primary-color) hover:opacity-95 text-[16px] text-nowrap font-semibold px-2 py-1 w-[94px] rounded-full cursor-pointer flex items-center justify-center grow-0"
             >
               Đăng nhập
             </button>
@@ -149,7 +149,7 @@ export default function RightSide() {
                         </svg>
                       </div>
 
-                      <div className="text-[16px] flex-1 items-center font-medium ">
+                      <div className="text-[16px] flex-1 items-center font-semibold ">
                         Xem hồ sơ
                       </div>
                     </a>
@@ -177,7 +177,7 @@ export default function RightSide() {
                           </svg>
                         </div>
 
-                        <div className="text-[16px]  font-medium">
+                        <div className="text-[16px] font-semibold">
                           Đăng xuất
                         </div>
                       </div>
