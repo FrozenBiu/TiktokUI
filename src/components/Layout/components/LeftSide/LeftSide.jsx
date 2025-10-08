@@ -269,9 +269,9 @@ export default function LeftSide() {
             onClick={() => {
               setIsLogin(!isLogin);
             }}
-            className={`${
-              !show && "lg:block"
-            } hidden mt-2 cursor-pointer hover:opacity-90 bg-(--primary-color) w-full rounded-md color-white text-[16px] h-10 leading-[21px] min-w-[108px] px-4 py-[1px] font-medium`}
+            className={` ${(isLogin || show) && "hidden"}  ${
+              !isLogin && !show ? "hidden lg:block" : ""
+            }  mt-2 cursor-pointer hover:opacity-90 bg-(--primary-color) w-full rounded-md color-white text-[16px] h-10 leading-[21px] min-w-[108px] px-4 py-[1px] font-medium`}
           >
             Đăng nhập
           </button>

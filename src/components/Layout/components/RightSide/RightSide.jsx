@@ -93,7 +93,7 @@ export default function RightSide() {
           {!isLogin && (
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="bg-(--primary-color) text-[16px] font-medium px-2 py-1 w-[94px] rounded-full cursor-pointer flex items-center justify-center grow-0"
+              className="bg-(--primary-color) hover:opacity-95 text-[16px] font-medium px-2 py-1 w-[94px] rounded-full cursor-pointer flex items-center justify-center grow-0"
             >
               Đăng nhập
             </button>
