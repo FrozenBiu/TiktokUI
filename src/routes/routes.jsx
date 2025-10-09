@@ -27,7 +27,7 @@ export const publicRoutes = [
     component: Friends,
   },
   {
-    path: "/profile",
+    path: "/:nickname",
     component: Profile,
   },
   {

@@ -8,20 +8,20 @@ function App() {
     <Router>
       <div className="App no-scrollbar overflow-y-scroll">
         <Routes>
-          {publicRoutes.map((routes, index) => {
-            const Page = routes.component;
+          {publicRoutes.map((route, index) => {
+            const Page = route.component;
 
             let Layout = DefaultLayout;
-            if (routes.layout) {
-              Layout = routes.layout;
-            } else if (routes.layout === null) {
+            if (route.layout) {
+              Layout = route.layout;
+            } else if (route.layout === null) {
               Layout = Fragment;
             }
 
             return (
               <Route
                 key={index}
-                path={routes.path}
+                path={route.path}
                 element={
                   <Layout>
                     <Page />
