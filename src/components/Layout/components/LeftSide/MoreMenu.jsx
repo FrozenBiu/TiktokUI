@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "./Menu/Header";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const MENU_ITEMS = [
   {
     title: "Tạo hiệu ứng TikTok",
@@ -182,7 +183,7 @@ export default function MoreMenu({ show, isMoreMenu, setShow, setIsMoreMenu }) {
               className="w-full list-none px-[0.5rem] rounded-md hover:bg-[#ffffff30]"
             >
               <button className="flex justify-between items-center cursor-pointer w-full rounded-[5px] text-[15px] min-w-0 h-[2.5rem] p-0">
-                <p className="font-medium text-[0.9375rem] leading-[1.21875rem] ">
+                <p className="font-semibold text-[0.9375rem] leading-[1.21875rem] ">
                   {item.title}
                 </p>
                 <div className="text-[#ffffff52]">

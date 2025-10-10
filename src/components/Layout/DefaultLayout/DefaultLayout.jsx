@@ -1,6 +1,6 @@
 import { useState } from "react";
+import AppContext from "../../AppProvider/AppProvider";
 import LeftSide from "../components/LeftSide/LeftSide";
-import AppContext from "../components/AppProvider/AppProvider";
 import RightSide from "../components/RightSide/RightSide";
 
 export default function DefaultLayout({ children }) {

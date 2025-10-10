@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 @theme {
   --font-tiktokDisplay: TikTokDisplayFont;
+  --font-IBM: "IBM Plex Sans", sans-serif;
   --primary-color: #ff3b5c;
 }
 

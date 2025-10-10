@@ -1,3 +1,5 @@
+import routesConfig from "../config/routes.js";
+
 import Home from "../pages/Home/index.jsx";
 import Following from "../pages/Following/index.jsx";
 import Explore from "../pages/Explore/index.jsx";
@@ -11,32 +13,32 @@ import UploadLayout from "../components/Layout/UploadLayout/UploadLayout.jsx";
 // Pulic routes dùng khi không cần đăng nhập vẫn truy cập được
 export const publicRoutes = [
   {
-    path: "/",
+    path: routesConfig.home,
     component: Home,
   },
   {
-    path: "/following",
+    path: routesConfig.following,
     component: Following,
   },
   {
-    path: "/explore",
+    path: routesConfig.explore,
     component: Explore,
   },
   {
-    path: "/friends",
+    path: routesConfig.friends,
     component: Friends,
   },
   {
-    path: "/:nickname",
+    path: routesConfig.profile,
     component: Profile,
   },
   {
-    path: "/upload",
+    path: routesConfig.upload,
     component: Upload,
     layout: UploadLayout,
   },
   {
-    path: "/search",
+    path: routesConfig.search,
     component: Search,
     layout: null,
   },

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Popover } from "@base-ui-components/react/popover";
-import AppContext from "../AppProvider/AppProvider";
+import AppContext from "../../../AppProvider/AppProvider";
 
 export default function RightSide() {
   const { isLogin, setIsLogin } = useContext(AppContext);
@@ -167,7 +167,7 @@ export default function RightSide() {
                           <svg
                             fill="currentColor"
                             color="inherit"
-                            font-size="20"
+                            fontSize="20"
                             viewBox="0 0 48 48"
                             xmlns="http://www.w3.org/2000/svg"
                             className="size-[1em]"

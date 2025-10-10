@@ -2,17 +2,20 @@ import { useState, useContext, useRef } from "react";
 import { MenuLeft } from "./MenuLeft";
 import Search from "./Search";
 import MoreMenu from "./MoreMenu";
-import AppContext from "../AppProvider/AppProvider";
+import AppContext from "../../../AppProvider/AppProvider";
+import routesConfig from "../../../../config/routes";
 
 export default function LeftSide() {
+  const { isLogin, setIsLogin } = useContext(AppContext);
+
   const searchRef = useRef(null);
+
+  const [searchValue, setSearchValue] = useState("");
 
   const [show, setShow] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [isMoreMenu, setIsMoreMenu] = useState(false);
   const [isActive, setIsActive] = useState(0); //state kiểm tra page đang active
-  // const [isLogin, setIsLogin] = useState(false);
-  const { isLogin, setIsLogin } = useContext(AppContext);
 
   const notYetLogin = MenuLeft.filter((item) => !item.mustLogin);
 
@@ -30,7 +33,7 @@ export default function LeftSide() {
           } gap-[1rem] shrink-0 cursor-pointer`}
         >
           {/* Logo Tiktok */}
-          <a href="/">
+          <a href={routesConfig.home}>
             {/* Logo full */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -150,12 +153,12 @@ export default function LeftSide() {
               />
             </svg>
             <p
-              className={`outline-0 hidden ${
-                !show && "lg:block"
-              } text-gray-300 font-medium
+              className={`outline-0 w-[75%] hidden ${!show && "lg:block"} ${
+                searchValue ? "text-[#f6f6f6]" : "text-[#ffffff66]"
+              } font-medium text-nowrap truncate text-left
               text-sm`}
             >
-              Tìm kiếm
+              {searchValue ? searchValue : "Tìm kiếm"}
             </p>
           </button>
         </div>
@@ -170,8 +173,18 @@ export default function LeftSide() {
                   data-id={`${index}`}
                   onClick={(e) => {
                     setShow(false);
-                    setIsActive(Number(e.currentTarget.dataset.id));
-                    if (Number(e.currentTarget.dataset.id) === 9) {
+
+                    if (
+                      Number(e.currentTarget.dataset.id) !==
+                      notYetLogin.length - 1
+                    ) {
+                      setIsActive(Number(e.currentTarget.dataset.id));
+                    }
+
+                    if (
+                      Number(e.currentTarget.dataset.id) ===
+                      notYetLogin.length - 1
+                    ) {
                       if (!show && !isMoreMenu && !isSearching) {
                         setShow(true);
                         setIsMoreMenu(true);
@@ -186,7 +199,13 @@ export default function LeftSide() {
                     }
                   }}
                   className={`flex justify-between ${
-                    isActive === index ? "text-(--primary-color)" : ""
+                    !isMoreMenu && !isSearching && isActive === index
+                      ? "text-(--primary-color)"
+                      : ""
+                  } ${
+                    isMoreMenu && index === notYetLogin.length - 1
+                      ? "text-(--primary-color)"
+                      : ""
                   } ${
                     !show && "lg:justify-start lg:w-[13rem]"
                   } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
@@ -221,8 +240,18 @@ export default function LeftSide() {
                   data-id={`${index}`}
                   onClick={(e) => {
                     setShow(false);
-                    setIsActive(Number(e.currentTarget.dataset.id));
-                    if (Number(e.currentTarget.dataset.id) === 9) {
+
+                    if (
+                      Number(e.currentTarget.dataset.id) !==
+                      MenuLeft.length - 1
+                    ) {
+                      setIsActive(Number(e.currentTarget.dataset.id));
+                    }
+
+                    if (
+                      Number(e.currentTarget.dataset.id) ===
+                      MenuLeft.length - 1
+                    ) {
                       if (!show && !isMoreMenu && !isSearching) {
                         setShow(true);
                         setIsMoreMenu(true);
@@ -237,7 +266,16 @@ export default function LeftSide() {
                     }
                   }}
                   className={`flex justify-between ${
-                    isActive === index ? "text-(--primary-color)" : ""
+                    !isMoreMenu &&
+                    !isSearching &&
+                    !isMoreMenu &&
+                    isActive === index
+                      ? "text-(--primary-color)"
+                      : ""
+                  } ${
+                    isMoreMenu && index === MenuLeft.length - 1
+                      ? "text-(--primary-color)"
+                      : ""
                   } ${
                     !show && "lg:justify-start lg:w-[13rem]"
                   } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
@@ -300,6 +338,8 @@ export default function LeftSide() {
       </div>
 
       <Search
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
         searchRef={searchRef}
         show={show}
         isSearching={isSearching}

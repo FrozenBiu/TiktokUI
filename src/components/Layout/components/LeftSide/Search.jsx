@@ -3,16 +3,18 @@ import { Link } from "react-router-dom";
 
 import * as searchServices from "../../../../apiServices/searchServices";
 import useDebounce from "../../../../hooks/useDebounce";
-import Image from "../Image";
+import Image from "../../../Image/index";
 
 export default function Search({
+  searchValue,
+  setSearchValue,
   show,
   isSearching,
   setShow,
   setIsSearching,
   searchRef,
 }) {
-  const [searchValue, setSearchValue] = useState("");
+  // const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -35,10 +37,20 @@ export default function Search({
     fetchApi();
   }, [debounced]);
 
+  function handleChange(e) {
+    const searchValue = e.target.value;
+
+    if (!searchValue.startsWith(" ")) {
+      setSearchValue(searchValue);
+    }
+  }
+
+  function handleSubmit() {}
+
   return (
     <div
       ref={searchRef}
-      className={`h-screen w-[318px] bg-black z-98 fixed top-0 left-60 transition-transform transform ease-in-out duration-500 border-r border-[#ffffff1f] ${
+      className={`h-screen w-[318px] bg-black z-98 fixed top-0 left-58 transition-transform transform ease-in-out duration-500 border-r border-[#ffffff1f] ${
         show && isSearching ? "-translate-x-40" : "-translate-x-122"
       }`}
     >
@@ -68,15 +80,16 @@ export default function Search({
       </button>
 
       {/* Thanh tìm kiếm */}
-      <div className="gap-1 bg-[#1f1f1f] rounded-full cursor-pointer ml-0 mr-2 mt-3 flex items-center relative border-1 border-transparent focus-within:border-[#ffffff33]">
+      <div className="gap-1 bg-[#1f1f1f] rounded-full cursor-pointer  mx-2 mt-3 flex items-center relative border-1 border-transparent focus-within:border-[#ffffff33]">
         <input
-          className="search2 caret-(--primary-color) rounded-full w-full py-3 px-3 text-white font-normal
+          className="search2 caret-(--primary-color) font-(--font-IBM) rounded-full w-full py-3 px-3 text-white
                 text-sm outline-0"
           type="text"
           placeholder="Tìm kiếm"
           autoSave="none"
           value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={handleChange}
+          onKeyDown={handleSubmit}
         />
         {/* Loading icon */}
         {loading && (
