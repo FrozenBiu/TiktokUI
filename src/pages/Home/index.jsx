@@ -7,7 +7,7 @@ export default function Home() {
         {/* Video */}
         <div className="h-full w-full min-w-[calc(500px-9.5rem)] flex gap-2 aspect-[9/16]">
           <video
-            className="w-full h-full bg-amber-400 rounded-3xl"
+            className="w-full h-full rounded-2xl"
             src="assets/videos/video-sample.mp4"
           ></video>
         </div>
@@ -23,7 +23,7 @@ export default function Home() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-8"
+                className="size-6"
               >
                 <path
                   strokeLinecap="round"
@@ -43,7 +43,7 @@ export default function Home() {
                 viewBox="0 0 24 24"
                 fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
-                className="size-8"
+                className="size-6"
               >
                 <g clipPath="url(#HeartFill_clip0)">
                   <g filter="url(#HeartFill_filter0_d)">
@@ -114,7 +114,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 48 48"
                 fill="currentColor"
-                className="size-8"
+                className="size-6"
               >
                 <path
                   fillRule="evenodd"
@@ -133,7 +133,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
                 viewBox="0 0 24 24"
-                className="size-8"
+                className="size-6"
               >
                 <path
                   fill="currentColor"
@@ -156,7 +156,7 @@ export default function Home() {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
-                className="size-8"
+                className="size-6"
               >
                 <path
                   fill="currentColor"
@@ -206,7 +206,7 @@ export default function Home() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="size-8"
+                className="size-6"
               >
                 <path
                   strokeLinecap="round"

@@ -109,7 +109,13 @@ export const MENU_ITEMS = [
   },
 ];
 
-export default function MoreMenu({ show, isMoreMenu, setShow, setIsMoreMenu }) {
+export default function MoreMenu({
+  moreMenuRef,
+  show,
+  isMoreMenu,
+  setShow,
+  setIsMoreMenu,
+}) {
   const [history, setHistory] = useState([{ data: MENU_ITEMS }]);
   const current = history[history.length - 1];
 
@@ -121,6 +127,7 @@ export default function MoreMenu({ show, isMoreMenu, setShow, setIsMoreMenu }) {
 
   return (
     <div
+      ref={moreMenuRef}
       className={`h-screen w-[318px] bg-black z-98 fixed top-0 left-58 transition-transform transform ease-in-out duration-500  ${
         show && isMoreMenu ? "-translate-x-40" : "-translate-x-120"
       }`}
@@ -167,7 +174,7 @@ export default function MoreMenu({ show, isMoreMenu, setShow, setIsMoreMenu }) {
       {/* Danh sách menu */}
       <ul
         id="search-result"
-        className="p-2 h-[80%] w-full overflow-x-hidden overflow-y-scroll mb-[14px] list-none flex flex-col gap-[0.25rem]"
+        className="p-2 h-[90%] w-full overflow-x-hidden overflow-y-scroll mt-1 mb-[14px] list-none flex flex-col gap-[0.25rem]"
       >
         {current.data.map((item, index) => {
           const isParent = !!item.children;

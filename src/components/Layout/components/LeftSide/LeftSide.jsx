@@ -1,4 +1,4 @@
-import { useState, useContext, useRef } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import { MenuLeft } from "./MenuLeft";
 import Search from "./Search";
 import MoreMenu from "./MoreMenu";
@@ -9,6 +9,9 @@ export default function LeftSide() {
   const { isLogin, setIsLogin } = useContext(AppContext);
 
   const searchRef = useRef(null);
+  const moreMenuRef = useRef(null);
+  const searchToggleRef = useRef(null);
+  const moreToggleRef = useRef(null);
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -19,12 +22,50 @@ export default function LeftSide() {
 
   const notYetLogin = MenuLeft.filter((item) => !item.mustLogin);
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      const target = e.target;
+      const insideSearch = searchRef.current?.contains(target);
+      const insideMore = moreMenuRef.current?.contains(target);
+      const clickedSearchToggle = searchToggleRef.current?.contains(target);
+      const clickedMoreToggle = moreToggleRef.current?.contains(target);
+
+      // Nếu click nằm trong search, more, hoặc trên 2 nút toggle => không đóng
+      if (
+        insideSearch ||
+        insideMore ||
+        clickedSearchToggle ||
+        clickedMoreToggle
+      ) {
+        return;
+      }
+
+      // Nếu có panel đang mở thì đóng nó
+      let closed = false;
+      if (isSearching) {
+        setIsSearching(false);
+        closed = true;
+      }
+      if (isMoreMenu) {
+        setIsMoreMenu(false);
+        closed = true;
+      }
+      if (closed) setShow(false);
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSearching, isMoreMenu]);
+
   return (
     <>
       <div
         className={`w-[4.5rem] ${
           !show && "lg:w-[240px] lg:border-0"
-        } px-[1rem] absolute left-0 top-0 h-full border-r-[0.5px] border-[#6a728262] z-99 bg-black`}
+        } px-[1rem] fixed left-0 top-0 h-screen border-r-[0.5px] border-[#6a728262] z-99 bg-black overscroll-contain`}
       >
         {/* Logo và thanh tìm kiếm */}
         <div
@@ -119,6 +160,7 @@ export default function LeftSide() {
 
           {/* Thanh tìm kiếm */}
           <button
+            ref={searchToggleRef}
             onClick={() => {
               if (!show && !isMoreMenu && !isSearching) {
                 setShow(true);
@@ -130,6 +172,8 @@ export default function LeftSide() {
                 setIsMoreMenu(false);
                 setIsSearching(true);
               }
+              // setShow(!show);
+              // setIsSearching(!isSearching);
               document.querySelector(".search2").focus();
             }}
             className={`${
@@ -164,8 +208,8 @@ export default function LeftSide() {
         </div>
 
         {/* Thanh chức năng khác */}
-        <div className="pt-[0.25rem] pb-[0.5rem] w-full scrollbar flex flex-col items-center gap-[0.25rem]">
-          <ul className="overflow-y-scroll flex flex-col gap-[0.25rem]">
+        <div className="pt-[0.25rem] pb-[0.5rem] w-full h-[85%] overflow-y-scroll flex flex-col items-center gap-[0.25rem]">
+          <ul className=" flex flex-col gap-[0.25rem]">
             {!isLogin &&
               notYetLogin.map((item, index) => (
                 <li
@@ -210,14 +254,19 @@ export default function LeftSide() {
                     !show && "lg:justify-start lg:w-[13rem]"
                   } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
                 >
-                  <button className="cursor-pointer">
+                  <button
+                    ref={
+                      index === notYetLogin.length - 1 ? moreToggleRef : null
+                    }
+                    className="cursor-pointer"
+                  >
                     <div
                       className={`flex items-center gap-[0.75rem] ${
                         show ? "" : "lg:ms-1"
                       }`}
                     >
                       <div
-                        className={`text-[32px] shrink-0 flex items-center justify-center`}
+                        className={`size-[32px] text-[28px] shrink-0 flex items-center justify-center`}
                       >
                         {item.image}
                       </div>
@@ -280,14 +329,17 @@ export default function LeftSide() {
                     !show && "lg:justify-start lg:w-[13rem]"
                   } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
                 >
-                  <button className="cursor-pointer">
+                  <button
+                    ref={index === MenuLeft.length - 1 ? moreToggleRef : null}
+                    className="cursor-pointer"
+                  >
                     <div
                       className={`flex items-center gap-[0.75rem] ${
                         show ? "" : "lg:ms-1"
                       }`}
                     >
                       <div
-                        className={`text-[32px] shrink-0 flex items-center justify-center`}
+                        className={`size-[32px] text-[28px] shrink-0 flex items-center justify-center`}
                       >
                         {item.image}
                       </div>
@@ -310,30 +362,30 @@ export default function LeftSide() {
               setIsLogin(!isLogin);
             }}
             className={` ${(isLogin || show) && "hidden"}  ${
-              !isLogin && !show ? "hidden lg:block" : ""
-            }  mt-2 cursor-pointer hover:opacity-90 bg-(--primary-color) w-full rounded-md color-white text-[16px] h-10 leading-[21px] min-w-[108px] px-4 py-[1px] font-semibold`}
+              !isLogin && !show ? "hidden lg:flex" : ""
+            } items-center justify-center mt-2 cursor-pointer hover:opacity-90 bg-(--primary-color) rounded-md color-white text-[16px] leading-[40px] w-50 min-w-[108px] px-4 py-[1px] font-semibold`}
           >
             Đăng nhập
           </button>
-        </div>
 
-        {/* Line */}
-        <div className="line ml-1 mt-4 w-full h-[0.5px] bg-[#282829d8]"></div>
+          {/* Line */}
+          <div className="line ml-1 mt-4 w-full h-[0.5px] bg-[#2b2a2a60]"></div>
 
-        {/* Copyright */}
-        <div className={`${!show && "lg:block"} hidden pt-4 pl-2`}>
-          <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
-            Công ty
-          </h4>
-          <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
-            Chương trình
-          </h4>
-          <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
-            Điều khoản và chính sách
-          </h4>
-          <span className="text-[12px] leading-[16px] mt-[5px] mr-[6px] text-[#ffffff80] font-semibold">
-            ©2025 TikTok{" "}
-          </span>
+          {/* Copyright */}
+          <div className={`${!show && "lg:block"} hidden pt-4 -ml-4`}>
+            <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
+              Công ty
+            </h4>
+            <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
+              Chương trình
+            </h4>
+            <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
+              Điều khoản và chính sách
+            </h4>
+            <span className="text-[12px] leading-[16px] mt-[5px] mr-[6px] text-[#ffffff80] font-semibold">
+              ©2025 TikTok{" "}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -347,6 +399,7 @@ export default function LeftSide() {
         setIsSearching={setIsSearching}
       />
       <MoreMenu
+        moreMenuRef={moreMenuRef}
         show={show}
         isMoreMenu={isMoreMenu}
         setShow={setShow}
