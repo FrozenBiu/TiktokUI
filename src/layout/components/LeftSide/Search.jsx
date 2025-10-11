@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import * as searchServices from "../../../../apiServices/searchServices";
-import useDebounce from "../../../../hooks/useDebounce";
-import Image from "../../../Image/index";
+import * as searchServices from "../../../services/searchServices";
+import useDebounce from "../../../hooks/useDebounce";
+import Image from "../../../components/Image/index";
 
 export default function Search({
   searchValue,

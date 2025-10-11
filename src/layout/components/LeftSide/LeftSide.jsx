@@ -2,8 +2,8 @@ import { useState, useContext, useRef, useEffect } from "react";
 import { MenuLeft } from "./MenuLeft";
 import Search from "./Search";
 import MoreMenu from "./MoreMenu";
-import AppContext from "../../../AppProvider/AppProvider";
-import routesConfig from "../../../../config/routes";
+import AppContext from "../../../components/AppProvider/AppProvider";
+import config from "../../../config";
 
 export default function LeftSide() {
   const { isLogin, setIsLogin } = useContext(AppContext);
@@ -74,7 +74,7 @@ export default function LeftSide() {
           } gap-[1rem] shrink-0 cursor-pointer`}
         >
           {/* Logo Tiktok */}
-          <a href={routesConfig.home}>
+          <a href={config.routes.home}>
             {/* Logo full */}
             <svg
               xmlns="http://www.w3.org/2000/svg"

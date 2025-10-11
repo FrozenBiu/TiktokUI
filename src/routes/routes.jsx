@@ -1,4 +1,4 @@
-import routesConfig from "../config/routes.js";
+import config from "../config";
 
 import Home from "../pages/Home/index.jsx";
 import Following from "../pages/Following/index.jsx";
@@ -8,37 +8,37 @@ import Profile from "../pages/Profile/index.jsx";
 import Upload from "../pages/Upload/index.jsx";
 import Search from "../pages/Search/index.jsx";
 // Layouts
-import UploadLayout from "../components/Layout/UploadLayout/UploadLayout.jsx";
+import UploadLayout from "../layout/UploadLayout/UploadLayout.jsx";
 
 // Pulic routes dùng khi không cần đăng nhập vẫn truy cập được
 export const publicRoutes = [
   {
-    path: routesConfig.home,
+    path: config.routes.home,
     component: Home,
   },
   {
-    path: routesConfig.following,
+    path: config.routes.following,
     component: Following,
   },
   {
-    path: routesConfig.explore,
+    path: config.routes.explore,
     component: Explore,
   },
   {
-    path: routesConfig.friends,
+    path: config.routes.friends,
     component: Friends,
   },
   {
-    path: routesConfig.profile,
+    path: config.routes.profile,
     component: Profile,
   },
   {
-    path: routesConfig.upload,
+    path: config.routes.upload,
     component: Upload,
     layout: UploadLayout,
   },
   {
-    path: routesConfig.search,
+    path: config.routes.search,
     component: Search,
     layout: null,
   },

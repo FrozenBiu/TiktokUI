@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AppContext from "../../AppProvider/AppProvider";
+import AppContext from "../../components/AppProvider/AppProvider";
 import LeftSide from "../components/LeftSide/LeftSide";
 import RightSide from "../components/RightSide/RightSide";
 
