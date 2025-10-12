@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Popover } from "@base-ui-components/react/popover";
-import AppContext from "../../../components/AppProvider/AppProvider";
+import { AppContext } from "~/components/AppProvider/AppProvider";
 
 export default function RightSide() {
   const { isLogin, setIsLogin } = useContext(AppContext);

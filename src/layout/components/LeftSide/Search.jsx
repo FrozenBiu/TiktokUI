@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import * as searchServices from "../../../services/searchServices";
-import useDebounce from "../../../hooks/useDebounce";
-import Image from "../../../components/Image/index";
+import * as searchServices from "~/services/searchServices";
+import useDebounce from "~/hooks/useDebounce";
+import Image from "~/components/Image/index";
 
 export default function Search({
   searchValue,
@@ -14,28 +14,27 @@ export default function Search({
   setIsSearching,
   searchRef,
 }) {
-  // const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const debounced = useDebounce(searchValue, 500);
+  const debouncedValue = useDebounce(searchValue, 500);
 
   useEffect(() => {
-    if (!debounced.trim()) {
+    if (!debouncedValue.trim()) {
       return;
     }
 
     const fetchApi = async () => {
       setLoading(true);
 
-      const result = await searchServices.search(debounced);
+      const result = await searchServices.search(debouncedValue);
       setSearchResult(result);
 
       setLoading(false);
     };
 
     fetchApi();
-  }, [debounced]);
+  }, [debouncedValue]);
 
   function handleChange(e) {
     const searchValue = e.target.value;
@@ -45,7 +44,12 @@ export default function Search({
     }
   }
 
-  function handleSubmit() {}
+  function handleSubmit(e) {
+    if (e.key === "Enter") {
+      console.log("submitted");
+      document.querySelector(".search2").value = "";
+    }
+  }
 
   return (
     <div
@@ -83,7 +87,7 @@ export default function Search({
       <div className="gap-1 bg-[#1f1f1f] rounded-full cursor-pointer  mx-2 mt-3 flex items-center relative border-1 border-transparent focus-within:border-[#ffffff33]">
         <input
           className="search2 caret-(--primary-color) font-(--font-IBM) rounded-full w-full py-3 px-3 text-white
-                text-sm outline-0"
+                text-sm outline-0 mr-5 truncate"
           type="text"
           placeholder="Tìm kiếm"
           autoSave="none"

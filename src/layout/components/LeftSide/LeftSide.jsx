@@ -1,9 +1,12 @@
 import { useState, useContext, useRef, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+
 import { MenuLeft } from "./MenuLeft";
 import Search from "./Search";
 import MoreMenu from "./MoreMenu";
-import AppContext from "../../../components/AppProvider/AppProvider";
-import config from "../../../config";
+import { AppContext } from "~/components/AppProvider/AppProvider";
+import config from "~/config";
+import MenuItem from "./Menu/MenuItem";
 
 export default function LeftSide() {
   const { isLogin, setIsLogin } = useContext(AppContext);
@@ -212,8 +215,83 @@ export default function LeftSide() {
           <ul className=" flex flex-col gap-[0.25rem]">
             {!isLogin &&
               notYetLogin.map((item, index) => (
-                <li
+                // <NavLink
+                //   key={index}
+                //   to={item.to ? item.to : ""}
+                //   data-id={`${index}`}
+                //   onClick={(e) => {
+                //     setShow(false);
+
+                //     if (
+                //       Number(e.currentTarget.dataset.id) !==
+                //       notYetLogin.length - 1
+                //     ) {
+                //       setIsActive(Number(e.currentTarget.dataset.id));
+                //     }
+
+                //     if (
+                //       Number(e.currentTarget.dataset.id) ===
+                //       notYetLogin.length - 1
+                //     ) {
+                //       if (!show && !isMoreMenu && !isSearching) {
+                //         setShow(true);
+                //         setIsMoreMenu(true);
+                //       } else if (show && isMoreMenu) {
+                //         setShow(false);
+                //         setIsMoreMenu(false);
+                //       } else if (show && !isMoreMenu && isSearching) {
+                //         setIsSearching(false);
+                //         setShow(true);
+                //         setIsMoreMenu(true);
+                //       }
+                //     }
+                //   }}
+                //   className={`flex justify-between ${
+                //     !isMoreMenu && !isSearching && isActive === index
+                //       ? "text-(--primary-color)"
+                //       : ""
+                //   } ${
+                //     isMoreMenu && index === notYetLogin.length - 1
+                //       ? "text-(--primary-color)"
+                //       : ""
+                //   } ${
+                //     !show && "lg:justify-start lg:w-[13rem]"
+                //   } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
+                // >
+                //   <button
+                //     ref={
+                //       index === notYetLogin.length - 1 ? moreToggleRef : null
+                //     }
+                //     className="cursor-pointer"
+                //   >
+                //     <div
+                //       className={`flex items-center gap-[0.75rem] ${
+                //         show ? "" : "lg:ms-1"
+                //       }`}
+                //     >
+                //       <div
+                //         className={`size-[32px] text-[28px] shrink-0 flex items-center justify-center`}
+                //       >
+                //         {item.image}
+                //       </div>
+                //       <h2
+                //         className={`font-semibold ml-1 hidden ${
+                //           !show ? "lg:block lg:opacity-100" : "lg:opacity-0"
+                //         } transition-all ease-in-out duration-300`}
+                //       >
+                //         {item.title}
+                //       </h2>
+                //     </div>
+                //   </button>
+                // </NavLink>
+
+                <MenuItem
                   key={index}
+                  title={item.title}
+                  image={item.image}
+                  show={show}
+                  ref={index === notYetLogin.length - 1 ? moreToggleRef : null}
+                  to={item.to ? item.to : ""}
                   data-id={`${index}`}
                   onClick={(e) => {
                     setShow(false);
@@ -253,39 +331,18 @@ export default function LeftSide() {
                   } ${
                     !show && "lg:justify-start lg:w-[13rem]"
                   } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
-                >
-                  <button
-                    ref={
-                      index === notYetLogin.length - 1 ? moreToggleRef : null
-                    }
-                    className="cursor-pointer"
-                  >
-                    <div
-                      className={`flex items-center gap-[0.75rem] ${
-                        show ? "" : "lg:ms-1"
-                      }`}
-                    >
-                      <div
-                        className={`size-[32px] text-[28px] shrink-0 flex items-center justify-center`}
-                      >
-                        {item.image}
-                      </div>
-                      <h2
-                        className={`font-semibold ml-1 hidden ${
-                          !show ? "lg:block lg:opacity-100" : "lg:opacity-0"
-                        } transition-all ease-in-out duration-300`}
-                      >
-                        {item.title}
-                      </h2>
-                    </div>
-                  </button>
-                </li>
+                />
               ))}
 
             {isLogin &&
               MenuLeft.map((item, index) => (
-                <li
+                <MenuItem
                   key={index}
+                  title={item.title}
+                  image={item.image}
+                  show={show}
+                  ref={index === MenuLeft.length - 1 ? moreToggleRef : null}
+                  to={item.to ? item.to : ""}
                   data-id={`${index}`}
                   onClick={(e) => {
                     setShow(false);
@@ -315,44 +372,17 @@ export default function LeftSide() {
                     }
                   }}
                   className={`flex justify-between ${
-                    !isMoreMenu &&
-                    !isSearching &&
-                    !isMoreMenu &&
-                    isActive === index
+                    !isMoreMenu && !isSearching && isActive === index
                       ? "text-(--primary-color)"
                       : ""
                   } ${
-                    isMoreMenu && index === MenuLeft.length - 1
+                    isMoreMenu && index === notYetLogin.length - 1
                       ? "text-(--primary-color)"
                       : ""
                   } ${
                     !show && "lg:justify-start lg:w-[13rem]"
                   } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
-                >
-                  <button
-                    ref={index === MenuLeft.length - 1 ? moreToggleRef : null}
-                    className="cursor-pointer"
-                  >
-                    <div
-                      className={`flex items-center gap-[0.75rem] ${
-                        show ? "" : "lg:ms-1"
-                      }`}
-                    >
-                      <div
-                        className={`size-[32px] text-[28px] shrink-0 flex items-center justify-center`}
-                      >
-                        {item.image}
-                      </div>
-                      <h2
-                        className={`font-semibold ml-1 hidden ${
-                          !show ? "lg:block lg:opacity-100" : "lg:opacity-0"
-                        } transition-all ease-in-out duration-300`}
-                      >
-                        {item.title}
-                      </h2>
-                    </div>
-                  </button>
-                </li>
+                />
               ))}
           </ul>
 

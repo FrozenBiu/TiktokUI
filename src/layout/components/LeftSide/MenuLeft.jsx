@@ -1,3 +1,5 @@
+import config from "~/config";
+
 export const MenuLeft = [
   {
     image: (
@@ -12,6 +14,7 @@ export const MenuLeft = [
     ),
     title: "Đề xuất",
     mustLogin: false,
+    to: config.routes.home,
   },
   {
     image: (
@@ -27,6 +30,7 @@ export const MenuLeft = [
     ),
     title: "Khám phá",
     mustLogin: false,
+    to: config.routes.explore,
   },
   {
     image: (
@@ -41,6 +45,7 @@ export const MenuLeft = [
     ),
     title: "Đã follow",
     mustLogin: false,
+    to: config.routes.following,
   },
   {
     image: (
@@ -55,6 +60,7 @@ export const MenuLeft = [
     ),
     title: "Bạn bè",
     mustLogin: true,
+    to: config.routes.friends,
   },
   {
     image: (
@@ -75,6 +81,7 @@ export const MenuLeft = [
     ),
     title: "LIVE",
     mustLogin: false,
+    to: config.routes.live,
   },
   {
     image: (
@@ -120,6 +127,7 @@ export const MenuLeft = [
     ),
     title: "Tải lên",
     mustLogin: false,
+    to: config.routes.upload,
   },
   {
     image: (
@@ -140,6 +148,7 @@ export const MenuLeft = [
     ),
     title: "Hồ sơ",
     mustLogin: false,
+    to: config.routes.profile,
   },
   {
     image: (

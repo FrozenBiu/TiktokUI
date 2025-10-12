@@ -54,7 +54,7 @@
     scrollbar-width: none;
   }
 
-  .active {
+  /* .active {
     color: var(--primary-color);
-  }
+  } */
 }

@@ -125,6 +125,10 @@ export default function MoreMenu({
     }
   }, [show, history.length]);
 
+  const handleBack = () => {
+    setHistory((prev) => prev.slice(0, prev.length - 1));
+  };
+
   return (
     <div
       ref={moreMenuRef}
@@ -163,12 +167,7 @@ export default function MoreMenu({
       )}
 
       {history.length > 1 && (
-        <Header
-          title={current.title}
-          onBack={() => {
-            setHistory((prev) => prev.slice(0, prev.length - 1));
-          }}
-        />
+        <Header title={current.title} onBack={handleBack} />
       )}
 
       {/* Danh sách menu */}

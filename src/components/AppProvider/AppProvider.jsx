@@ -1,5 +1,14 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
-const AppContext = createContext();
+// eslint-disable-next-line react-refresh/only-export-components
+export const AppContext = createContext();
 
-export default AppContext;
+export default function AppProvider({ children }) {
+  const [isLogin, setIsLogin] = useState(false);
+
+  return (
+    <AppContext.Provider value={{ isLogin, setIsLogin }}>
+      {children}
+    </AppContext.Provider>
+  );
+}
