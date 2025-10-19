@@ -1,5 +1,4 @@
 import { useState, useContext, useRef, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 
 import { MenuLeft } from "./MenuLeft";
 import Search from "./Search";
@@ -7,8 +6,16 @@ import MoreMenu from "./MoreMenu";
 import { AppContext } from "~/components/AppProvider/AppProvider";
 import config from "~/config";
 import MenuItem from "./Menu/MenuItem";
+import FollowingAccounts from "./FollowingAccounts/FollowingAccounts";
+import * as userService from "~/services/userService";
+
+const INIT_PAGE = 1;
+const PER_PAGE = 5;
 
 export default function LeftSide() {
+  const [page, setPage] = useState(INIT_PAGE);
+  const [suggestedUsers, setSuggestedUsers] = useState([]);
+
   const { isLogin, setIsLogin } = useContext(AppContext);
 
   const searchRef = useRef(null);
@@ -24,7 +31,9 @@ export default function LeftSide() {
   const [isActive, setIsActive] = useState(0); //state kiểm tra page đang active
 
   const notYetLogin = MenuLeft.filter((item) => !item.mustLogin);
+  const loginStatus = isLogin ? MenuLeft : notYetLogin; //Trạng thái login
 
+  // Xử lý khi người dùng nhấn vào ngoài phần tử search
   useEffect(() => {
     const handleClickOutside = (e) => {
       const target = e.target;
@@ -62,6 +71,20 @@ export default function LeftSide() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isSearching, isMoreMenu]);
+
+  // Gọi API lấy danh sách user đang follow
+  useEffect(() => {
+    userService
+      .getSuggested({ page, per_page: PER_PAGE })
+      .then((data) => {
+        setSuggestedUsers((prevData) => [...prevData, ...data]);
+      })
+      .catch((error) => console.log(error));
+  }, [page]);
+
+  const handleSeeMore = () => {
+    setPage((prev) => prev + 1);
+  };
 
   return (
     <>
@@ -210,138 +233,17 @@ export default function LeftSide() {
           </button>
         </div>
 
-        {/* Thanh chức năng khác */}
-        <div className="pt-[0.25rem] pb-[0.5rem] w-full h-[85%] overflow-y-scroll flex flex-col items-center gap-[0.25rem]">
-          <ul className=" flex flex-col gap-[0.25rem]">
-            {!isLogin &&
-              notYetLogin.map((item, index) => (
-                // <NavLink
-                //   key={index}
-                //   to={item.to ? item.to : ""}
-                //   data-id={`${index}`}
-                //   onClick={(e) => {
-                //     setShow(false);
-
-                //     if (
-                //       Number(e.currentTarget.dataset.id) !==
-                //       notYetLogin.length - 1
-                //     ) {
-                //       setIsActive(Number(e.currentTarget.dataset.id));
-                //     }
-
-                //     if (
-                //       Number(e.currentTarget.dataset.id) ===
-                //       notYetLogin.length - 1
-                //     ) {
-                //       if (!show && !isMoreMenu && !isSearching) {
-                //         setShow(true);
-                //         setIsMoreMenu(true);
-                //       } else if (show && isMoreMenu) {
-                //         setShow(false);
-                //         setIsMoreMenu(false);
-                //       } else if (show && !isMoreMenu && isSearching) {
-                //         setIsSearching(false);
-                //         setShow(true);
-                //         setIsMoreMenu(true);
-                //       }
-                //     }
-                //   }}
-                //   className={`flex justify-between ${
-                //     !isMoreMenu && !isSearching && isActive === index
-                //       ? "text-(--primary-color)"
-                //       : ""
-                //   } ${
-                //     isMoreMenu && index === notYetLogin.length - 1
-                //       ? "text-(--primary-color)"
-                //       : ""
-                //   } ${
-                //     !show && "lg:justify-start lg:w-[13rem]"
-                //   } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
-                // >
-                //   <button
-                //     ref={
-                //       index === notYetLogin.length - 1 ? moreToggleRef : null
-                //     }
-                //     className="cursor-pointer"
-                //   >
-                //     <div
-                //       className={`flex items-center gap-[0.75rem] ${
-                //         show ? "" : "lg:ms-1"
-                //       }`}
-                //     >
-                //       <div
-                //         className={`size-[32px] text-[28px] shrink-0 flex items-center justify-center`}
-                //       >
-                //         {item.image}
-                //       </div>
-                //       <h2
-                //         className={`font-semibold ml-1 hidden ${
-                //           !show ? "lg:block lg:opacity-100" : "lg:opacity-0"
-                //         } transition-all ease-in-out duration-300`}
-                //       >
-                //         {item.title}
-                //       </h2>
-                //     </div>
-                //   </button>
-                // </NavLink>
-
+        <div className="overflow-y-scroll h-[85%]">
+          {/* Thanh chức năng khác */}
+          <div className="pt-[0.25rem] pb-[0.5rem] w-full overflow-y-scroll flex flex-col items-center gap-[0.25rem]">
+            <ul className=" flex flex-col gap-[0.25rem]">
+              {loginStatus.map((item, index) => (
                 <MenuItem
                   key={index}
                   title={item.title}
                   image={item.image}
                   show={show}
-                  ref={index === notYetLogin.length - 1 ? moreToggleRef : null}
-                  to={item.to ? item.to : ""}
-                  data-id={`${index}`}
-                  onClick={(e) => {
-                    setShow(false);
-
-                    if (
-                      Number(e.currentTarget.dataset.id) !==
-                      notYetLogin.length - 1
-                    ) {
-                      setIsActive(Number(e.currentTarget.dataset.id));
-                    }
-
-                    if (
-                      Number(e.currentTarget.dataset.id) ===
-                      notYetLogin.length - 1
-                    ) {
-                      if (!show && !isMoreMenu && !isSearching) {
-                        setShow(true);
-                        setIsMoreMenu(true);
-                      } else if (show && isMoreMenu) {
-                        setShow(false);
-                        setIsMoreMenu(false);
-                      } else if (show && !isMoreMenu && isSearching) {
-                        setIsSearching(false);
-                        setShow(true);
-                        setIsMoreMenu(true);
-                      }
-                    }
-                  }}
-                  className={`flex justify-between ${
-                    !isMoreMenu && !isSearching && isActive === index
-                      ? "text-(--primary-color)"
-                      : ""
-                  } ${
-                    isMoreMenu && index === notYetLogin.length - 1
-                      ? "text-(--primary-color)"
-                      : ""
-                  } ${
-                    !show && "lg:justify-start lg:w-[13rem]"
-                  } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
-                />
-              ))}
-
-            {isLogin &&
-              MenuLeft.map((item, index) => (
-                <MenuItem
-                  key={index}
-                  title={item.title}
-                  image={item.image}
-                  show={show}
-                  ref={index === MenuLeft.length - 1 ? moreToggleRef : null}
+                  ref={index === loginStatus.length - 1 ? moreToggleRef : null}
                   to={item.to ? item.to : ""}
                   data-id={`${index}`}
                   onClick={(e) => {
@@ -376,7 +278,7 @@ export default function LeftSide() {
                       ? "text-(--primary-color)"
                       : ""
                   } ${
-                    isMoreMenu && index === notYetLogin.length - 1
+                    isMoreMenu && index === loginStatus.length - 1
                       ? "text-(--primary-color)"
                       : ""
                   } ${
@@ -384,37 +286,53 @@ export default function LeftSide() {
                   } items-center gap-[0.75rem] h-[2.5rem] rounded-md cursor-pointer hover:bg-[#1f1f1f]`}
                 />
               ))}
-          </ul>
+            </ul>
 
-          {/* Login */}
-          <button
-            onClick={() => {
-              setIsLogin(!isLogin);
-            }}
-            className={` ${(isLogin || show) && "hidden"}  ${
-              !isLogin && !show ? "hidden lg:flex" : ""
-            } items-center justify-center mt-2 cursor-pointer hover:opacity-90 bg-(--primary-color) rounded-md color-white text-[16px] leading-[40px] w-50 min-w-[108px] px-4 py-[1px] font-semibold`}
-          >
-            Đăng nhập
-          </button>
+            {/* Login */}
+            <button
+              onClick={() => {
+                setIsLogin(!isLogin);
+              }}
+              className={` ${(isLogin || show) && "hidden"}  ${
+                !isLogin && !show ? "hidden lg:flex" : ""
+              } items-center justify-center mt-2 cursor-pointer hover:opacity-90 bg-(--primary-color) rounded-md color-white text-[16px] leading-[40px] w-50 min-w-[108px] px-4 py-[1px] font-semibold`}
+            >
+              Đăng nhập
+            </button>
 
-          {/* Line */}
-          <div className="line ml-1 mt-4 w-full h-[0.5px] bg-[#2b2a2a60]"></div>
+            {/* Line */}
+            <div className="line ml-1 mt-4 w-full h-[0.5px] bg-[#2b2a2a60]"></div>
+          </div>
+
+          {/* Tài khoản đã follow */}
+          <div className={`${show ? "hidden" : "lg:block"} hidden`}>
+            {isLogin && (
+              <FollowingAccounts
+                data={suggestedUsers}
+                label={"Các tài khoản Đã Follow"}
+                onSeeMore={handleSeeMore}
+              />
+            )}
+          </div>
 
           {/* Copyright */}
-          <div className={`${!show && "lg:block"} hidden pt-4 -ml-4`}>
-            <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
-              Công ty
-            </h4>
-            <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
-              Chương trình
-            </h4>
-            <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
-              Điều khoản và chính sách
-            </h4>
-            <span className="text-[12px] leading-[16px] mt-[5px] mr-[6px] text-[#ffffff80] font-semibold">
-              ©2025 TikTok{" "}
-            </span>
+          <div
+            className={`pt-[0.25rem] pb-[0.5rem] w-full flex flex-col items-center gap-[0.25rem]`}
+          >
+            <div className={`${!show && "lg:block"} hidden pt-4 -ml-4`}>
+              <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
+                Công ty
+              </h4>
+              <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
+                Chương trình
+              </h4>
+              <h4 className="text-[15px] leading-[22px] mt-0 text-[#ffffff80] font-bold">
+                Điều khoản và chính sách
+              </h4>
+              <span className="text-[12px] leading-[16px] mt-[5px] mr-[6px] text-[#ffffff80] font-semibold">
+                ©2025 TikTok{" "}
+              </span>
+            </div>
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ export default function RightSide() {
   const { isLogin, setIsLogin } = useContext(AppContext);
 
   return (
-    <div className="w-[31%] hidden sm:block absolute right-0 top-0">
+    <div className="w-[31%] hidden sm:block fixed right-0 top-0">
       <div className="w-[100%] relative">
         {/* Thanh công cụ, download app, profile */}
         <div className="bg-[#1f1f1fb2] rounded-full inline-flex justify-end items-center xl:gap-3 p-2 mt-[1.25rem] mr-[1rem] absolute right-0 top-5">
