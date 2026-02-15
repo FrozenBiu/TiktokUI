@@ -1,4 +1,5 @@
 import { useState, useContext, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import { MenuLeft } from "./MenuLeft";
 import Search from "./Search";
@@ -15,6 +16,7 @@ const PER_PAGE = 5;
 export default function LeftSide() {
   const [page, setPage] = useState(INIT_PAGE);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
+  const location = useLocation();
 
   const { isLogin, setIsLogin } = useContext(AppContext);
 
@@ -29,9 +31,21 @@ export default function LeftSide() {
   const [isSearching, setIsSearching] = useState(false);
   const [isMoreMenu, setIsMoreMenu] = useState(false);
   const [isActive, setIsActive] = useState(0); //state kiểm tra page đang active
+  const [lastActiveIndex, setLastActiveIndex] = useState(0); //Lưu trữ index của page được highlight trước khi mở More menu
 
-  const notYetLogin = MenuLeft.filter((item) => !item.mustLogin);
-  const loginStatus = isLogin ? MenuLeft : notYetLogin; //Trạng thái login
+  const MenuWhenNotYetLogin = MenuLeft.filter((item) => !item.mustLogin);
+  const MenuLeftToShow = isLogin ? MenuLeft : MenuWhenNotYetLogin; //Trạng thái login
+
+  // Xác định index của page hiện tại dựa trên URL
+  useEffect(() => {
+    const currentIndex = MenuLeftToShow.findIndex(
+      (item) => item.to && location.pathname === item.to,
+    );
+    if (currentIndex !== -1) {
+      setIsActive(currentIndex);
+      setLastActiveIndex(currentIndex);
+    }
+  }, [location.pathname, MenuLeftToShow]);
 
   // Xử lý khi người dùng nhấn vào ngoài phần tử search
   useEffect(() => {
@@ -60,6 +74,7 @@ export default function LeftSide() {
       }
       if (isMoreMenu) {
         setIsMoreMenu(false);
+        setIsActive(lastActiveIndex);
         closed = true;
       }
       if (closed) setShow(false);
@@ -70,7 +85,7 @@ export default function LeftSide() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isSearching, isMoreMenu]);
+  }, [isSearching, isMoreMenu, lastActiveIndex]);
 
   // Gọi API lấy danh sách user đang follow
   useEffect(() => {
@@ -237,53 +252,52 @@ export default function LeftSide() {
           {/* Thanh chức năng khác */}
           <div className="pt-[0.25rem] pb-[0.5rem] w-full overflow-y-scroll flex flex-col items-center gap-[0.25rem]">
             <ul className=" flex flex-col gap-[0.25rem]">
-              {loginStatus.map((item, index) => (
+              {MenuLeftToShow.map((item, index) => (
                 <MenuItem
                   key={index}
                   title={item.title}
                   image={item.image}
                   show={show}
-                  ref={index === loginStatus.length - 1 ? moreToggleRef : null}
+                  ref={
+                    index === MenuLeftToShow.length - 1 ? moreToggleRef : null
+                  }
                   to={item.to ? item.to : ""}
                   data-id={`${index}`}
                   onClick={(e) => {
-                    setShow(false);
-<<<<<<< HEAD:src/components/Layout/components/LeftSide/LeftSide.jsx
-                    setIsActive(Number(e.currentTarget.dataset.id));
-                    if (Number(e.currentTarget.dataset.id) === 6) {
-=======
+                    const clickedIndex = Number(e.currentTarget.dataset.id);
+                    const isMoreMenuButton =
+                      clickedIndex === MenuLeftToShow.length - 1;
 
-                    if (
-                      Number(e.currentTarget.dataset.id) !==
-                      MenuLeft.length - 1
-                    ) {
-                      setIsActive(Number(e.currentTarget.dataset.id));
-                    }
-
-                    if (
-                      Number(e.currentTarget.dataset.id) ===
-                      MenuLeft.length - 1
-                    ) {
->>>>>>> a78eb51d302e3226237720f0a2927db4ecdaf991:src/layout/components/LeftSide/LeftSide.jsx
-                      if (!show && !isMoreMenu && !isSearching) {
+                    if (isMoreMenuButton) {
+                      // Xử lý nút More menu
+                      if (!isMoreMenu) {
+                        // Mở More menu
                         setShow(true);
                         setIsMoreMenu(true);
-                      } else if (show && isMoreMenu) {
+                        setIsSearching(false);
+                      } else {
+                        // Đóng More menu, quay lại page được highlight trước đó
                         setShow(false);
                         setIsMoreMenu(false);
-                      } else if (show && !isMoreMenu && isSearching) {
-                        setIsSearching(false);
-                        setShow(true);
-                        setIsMoreMenu(true);
+                        setIsActive(lastActiveIndex);
                       }
+                    } else {
+                      // Xử lý click vào các page thông thường
+                      setShow(false);
+                      setIsSearching(false);
+                      setIsMoreMenu(false);
+                      setIsActive(clickedIndex);
+                      setLastActiveIndex(clickedIndex);
                     }
                   }}
                   className={`flex justify-between ${
-                    !isMoreMenu && !isSearching && isActive === index
+                    !isMoreMenu &&
+                    isActive === index &&
+                    index !== MenuLeftToShow.length - 1
                       ? "text-(--primary-color)"
                       : ""
                   } ${
-                    isMoreMenu && index === loginStatus.length - 1
+                    isMoreMenu && index === MenuLeftToShow.length - 1
                       ? "text-(--primary-color)"
                       : ""
                   } ${
