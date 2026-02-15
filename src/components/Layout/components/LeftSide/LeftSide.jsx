@@ -169,7 +169,7 @@ export default function LeftSide() {
                   onClick={(e) => {
                     setShow(false);
                     setIsActive(Number(e.currentTarget.dataset.id));
-                    if (Number(e.currentTarget.dataset.id) === 9) {
+                    if (Number(e.currentTarget.dataset.id) === 6) {
                       if (!show && !isMoreMenu && !isSearching) {
                         setShow(true);
                         setIsMoreMenu(true);
