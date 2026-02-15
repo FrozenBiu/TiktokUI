@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "./Menu/Header";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const MENU_ITEMS = [
   {
     title: "Tạo hiệu ứng TikTok",
@@ -108,7 +109,13 @@ export const MENU_ITEMS = [
   },
 ];
 
-export default function MoreMenu({ show, isMoreMenu, setShow, setIsMoreMenu }) {
+export default function MoreMenu({
+  moreMenuRef,
+  show,
+  isMoreMenu,
+  setShow,
+  setIsMoreMenu,
+}) {
   const [history, setHistory] = useState([{ data: MENU_ITEMS }]);
   const current = history[history.length - 1];
 
@@ -118,8 +125,13 @@ export default function MoreMenu({ show, isMoreMenu, setShow, setIsMoreMenu }) {
     }
   }, [show, history.length]);
 
+  const handleBack = () => {
+    setHistory((prev) => prev.slice(0, prev.length - 1));
+  };
+
   return (
     <div
+      ref={moreMenuRef}
       className={`h-screen w-[318px] bg-black z-98 fixed top-0 left-58 transition-transform transform ease-in-out duration-500  ${
         show && isMoreMenu ? "-translate-x-40" : "-translate-x-120"
       }`}
@@ -155,18 +167,13 @@ export default function MoreMenu({ show, isMoreMenu, setShow, setIsMoreMenu }) {
       )}
 
       {history.length > 1 && (
-        <Header
-          title={current.title}
-          onBack={() => {
-            setHistory((prev) => prev.slice(0, prev.length - 1));
-          }}
-        />
+        <Header title={current.title} onBack={handleBack} />
       )}
 
       {/* Danh sách menu */}
       <ul
         id="search-result"
-        className="p-2 h-[80%] w-full overflow-x-hidden overflow-y-scroll mb-[14px] list-none flex flex-col gap-[0.25rem]"
+        className="p-2 h-[90%] w-full overflow-x-hidden overflow-y-scroll mt-1 mb-[14px] list-none flex flex-col gap-[0.25rem]"
       >
         {current.data.map((item, index) => {
           const isParent = !!item.children;
@@ -182,7 +189,7 @@ export default function MoreMenu({ show, isMoreMenu, setShow, setIsMoreMenu }) {
               className="w-full list-none px-[0.5rem] rounded-md hover:bg-[#ffffff30]"
             >
               <button className="flex justify-between items-center cursor-pointer w-full rounded-[5px] text-[15px] min-w-0 h-[2.5rem] p-0">
-                <p className="font-medium text-[0.9375rem] leading-[1.21875rem] ">
+                <p className="font-semibold text-[0.9375rem] leading-[1.21875rem] ">
                   {item.title}
                 </p>
                 <div className="text-[#ffffff52]">

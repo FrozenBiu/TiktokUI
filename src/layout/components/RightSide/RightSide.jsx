@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { Popover } from "@base-ui-components/react/popover";
-import AppContext from "../AppProvider/AppProvider";
+import { AppContext } from "~/components/AppProvider/AppProvider";
 
 export default function RightSide() {
   const { isLogin, setIsLogin } = useContext(AppContext);
 
   return (
-    <div className="w-[31%] hidden sm:block absolute right-0 top-0">
+    <div className="w-[31%] hidden sm:block fixed right-0 top-0">
       <div className="w-[100%] relative">
         {/* Thanh công cụ, download app, profile */}
         <div className="bg-[#1f1f1fb2] rounded-full inline-flex justify-end items-center xl:gap-3 p-2 mt-[1.25rem] mr-[1rem] absolute right-0 top-5">
@@ -93,7 +93,7 @@ export default function RightSide() {
           {!isLogin && (
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="bg-(--primary-color) hover:opacity-95 text-[16px] font-medium px-2 py-1 w-[94px] rounded-full cursor-pointer flex items-center justify-center grow-0"
+              className="bg-(--primary-color) hover:opacity-95 text-[16px] text-nowrap font-semibold px-2 py-1 w-[94px] rounded-full cursor-pointer flex items-center justify-center grow-0"
             >
               Đăng nhập
             </button>
@@ -149,7 +149,7 @@ export default function RightSide() {
                         </svg>
                       </div>
 
-                      <div className="text-[16px] flex-1 items-center font-medium ">
+                      <div className="text-[16px] flex-1 items-center font-semibold ">
                         Xem hồ sơ
                       </div>
                     </a>
@@ -167,7 +167,7 @@ export default function RightSide() {
                           <svg
                             fill="currentColor"
                             color="inherit"
-                            font-size="20"
+                            fontSize="20"
                             viewBox="0 0 48 48"
                             xmlns="http://www.w3.org/2000/svg"
                             className="size-[1em]"
@@ -177,7 +177,7 @@ export default function RightSide() {
                           </svg>
                         </div>
 
-                        <div className="text-[16px]  font-medium">
+                        <div className="text-[16px] font-semibold">
                           Đăng xuất
                         </div>
                       </div>

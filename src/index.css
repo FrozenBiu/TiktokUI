@@ -1,13 +1,35 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 @theme {
-  --font-roboto: "Roboto", sans-serif;
+  --font-tiktokDisplay: TikTokDisplayFont;
+  --font-IBM: "IBM Plex Sans", sans-serif;
   --primary-color: #ff3b5c;
+}
+
+@font-face {
+  font-family: TikTokDisplayFont;
+  src: url(/assets/Font/TikTokDisplayFont-Bold.woff2);
+  font-weight: 700;
+}
+@font-face {
+  font-family: TikTokFont;
+  src: url(/assets/Font/TikTokFont-Regular.woff2);
+  font-weight: 400;
+}
+@font-face {
+  font-family: TikTokFont;
+  src: url(/assets/Font/TikTokFont-Semibold.woff2);
+  font-weight: 600;
+}
+@font-face {
+  font-family: TikTokFont;
+  src: url(/assets/Font/TikTokFont-Bold.woff2);
+  font-weight: 700;
 }
 
 @layer base {
   body {
-    font-family: var(--font-roboto);
+    font-family: "IBM Plex Sans", sans-serif;
     line-height: 1.5;
     text-rendering: optimizespeed;
     background-color: black;
@@ -32,7 +54,7 @@
     scrollbar-width: none;
   }
 
-  .active {
+  /* .active {
     color: var(--primary-color);
-  }
+  } */
 }
